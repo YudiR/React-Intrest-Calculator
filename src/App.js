@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
 import Intrest from "./intrest.js";
+import Styled from "styled-components";
+import { Container, Row, Col } from "react-bootstrap";
 
 class App extends React.Component {
   constructor(props) {
@@ -30,9 +32,8 @@ class App extends React.Component {
     }
   };
 
-  
   add = () => {
-    console.log("hey!!!!!!!!!!")
+    console.log("hey!!!!!!!!!!");
     let dataCopy = JSON.parse(JSON.stringify(this.state.data));
     let newObj = {
       principle: "",
@@ -46,34 +47,27 @@ class App extends React.Component {
     });
   };
 
- 
-  
-  delete = (index) =>{
-    console.log("delete",index)
-    let dataCopy = JSON.parse(JSON.stringify(this.state.data))
-    dataCopy.splice(index,1) 
-    
-    
-    this.setState(
-      {
-        data: dataCopy
-      }
-    )
-  }
+  delete = index => {
+    console.log("delete", index);
+    let dataCopy = JSON.parse(JSON.stringify(this.state.data));
+    dataCopy.splice(index, 1);
+
+    this.setState({
+      data: dataCopy
+    });
+  };
 
   principleChange = pData => {
     console.log(pData);
     // let tempArray = {...this.state.data[pData.index]}
     let dataCopy = JSON.parse(JSON.stringify(this.state.data));
     dataCopy[pData.index].principle = pData.text;
-    
+
     dataCopy[pData.index] = this.calc(dataCopy[pData.index]);
-    
-    this.setState(
-      {
-        data: dataCopy
-      }
-    );
+
+    this.setState({
+      data: dataCopy
+    });
     console.log("temp:::", dataCopy);
   };
 
@@ -84,11 +78,9 @@ class App extends React.Component {
 
     dataCopy[data.index] = this.calc(dataCopy[data.index]);
 
-    this.setState(
-      {
-        data: dataCopy
-      }
-    );
+    this.setState({
+      data: dataCopy
+    });
   };
 
   yearsChange = data => {
@@ -105,17 +97,24 @@ class App extends React.Component {
   render() {
     let total = 0;
 
-      this.state.data.forEach(e=>{
-        console.log("E::",isNaN(e.amount));
-        
-        if(!isNaN(parseFloat(e.amount))){
-         total += parseFloat(e.amount)
+    this.state.data.forEach(e => {
+      console.log("E::", isNaN(e.amount));
+
+      if (!isNaN(parseFloat(e.amount))) {
+        total += parseFloat(e.amount);
       }
-      })
-    
+    });
+
     return (
       <div>
-        {this.state.data.map((obj, index) => (
+    
+
+        
+     
+        <Container>
+  <Row className="justify-content-md-center">
+    <Col sm={15}>
+    {this.state.data.map((obj, index) => (
           <Intrest
             key={index}
             {...obj}
@@ -128,9 +127,18 @@ class App extends React.Component {
             add={this.add}
             delete={this.delete}
           />
-         
         ))}
-        <h1>TOTAL:{total}</h1>
+    </Col>
+
+    <Col md={{ span: 1, offset: 5 }}>
+    <h1>TOTAL:{total}</h1>
+    </Col>
+
+    <Col>
+    </Col>
+
+   </Row> 
+</Container>
       </div>
     );
   }
